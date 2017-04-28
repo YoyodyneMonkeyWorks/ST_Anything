@@ -23,7 +23,7 @@ TMP75::TMP75(int8_t _address) {
 }
 
 void TMP75::begin(void) {
-	Wire.begin();                                // Join the I2C bus as a master
+  Wire.begin();                                // Join the I2C bus as a master
   Wire.beginTransmission(address);             // Address the TMP75 sensor
   Wire.write(0x01);                            // Address the Configuration register 
   Wire.write(0x60);                            // Set the temperature resolution 
@@ -35,7 +35,7 @@ void TMP75::begin(void) {
 }
 
 double TMP75::readCelsius(void) {
-	Wire.requestFrom(address,2);                 // Address the TMP75 and set number of bytes to receive
+  Wire.requestFrom(address,2);                 // Address the TMP75 and set number of bytes to receive
   byte MostSigByte = Wire.read();              // Read the first byte this is the MSB
   byte LeastSigByte = Wire.read();             // Now Read the second byte this is the LSB
 
@@ -44,10 +44,10 @@ double TMP75::readCelsius(void) {
   // From Datasheet the TMP75 has a quantisation value of 0.0625 degreesC per bit
   float centigrade = (TempSum*0.0625);
 
-	if (st::PollingSensor::debug) {
-		Serial.print(F("TMP75 Address: "));
-		Serial.print("0x");
-		Serial.println(address,HEX);
+  if (st::PollingSensor::debug) {
+    Serial.print(F("TMP75 Address: "));
+    Serial.print("0x");
+    Serial.println(address,HEX);
 	  
     Serial.print("0x"); Serial.println(MostSigByte, HEX);
     Serial.print("0x"); Serial.println(LeastSigByte, HEX);
