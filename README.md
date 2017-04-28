@@ -1,4 +1,4 @@
-# ST_Anything
+# ST_Anything Texas Instruments TMP75 Temperature Sensor Library
 ST Anything library for the Texas Instruments TMP75 I2C temperature sensor.  These sensors are found in Apple Macs and Sony televisons.
 
 The ST Anything sensor definition in the setup() part of your Arduino sketch takes an I2C address as a parameter for your device. Eight of these can be connected to just three Arduino pins.
