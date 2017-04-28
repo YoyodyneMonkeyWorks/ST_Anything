@@ -14,9 +14,7 @@
 //				- String &name - REQUIRED - the name of the object - must match the Groovy ST_Anything DeviceType tile name
 //				- long interval - REQUIRED - the polling interval in seconds
 //				- long offset - REQUIRED - the polling interval offset in seconds - used to prevent all polling sensors from executing at the same time
-//				- int8_t pinSCLK - REQUIRED - the Arduino Pin to be used as the TMP75 SCLK
-//				- int8_t pinCS - REQUIRED - the Arduino Pin to be used as the TMP75 CS
-//				- int8_t pinMISO - REQUIRED - the Arduino Pin to be used as the TMP75 MISO
+//				- byte address - REQUIRED - the I2C address for this sensor
 //
 //			  This class supports receiving configuration data from the SmartThings cloud via the ST App.  A user preference
 //			  can be configured in your phone's ST App, and then the "Configure" tile will send the data for all sensors to 
@@ -66,14 +64,17 @@ namespace st
 	{
 		String s = str.substring(str.indexOf(' ') + 1);
 
-		if (s.toInt() != 0) {
+		if (s.toInt() != 0)
+		{
 			st::PollingSensor::setInterval(s.toInt() * 1000);
-			if (st::PollingSensor::debug) {
+			if (st::PollingSensor::debug)
+			{
 				Serial.print(F("PS_TMP75Temperature::beSmart set polling interval to "));
 				Serial.println(s.toInt());
 			}
 		}
-		else {
+		else
+		{
 			if (st::PollingSensor::debug) 
 			{
 				Serial.print(F("TMP75Temperature::beSmart cannot convert "));
@@ -93,18 +94,15 @@ namespace st
 	//function to get data from sensor and queue results for transfer to ST Cloud 
 	void PS_TMP75Temperature::getData()
 	{
-
 		m_dblTemperatureSensorValue = m_TMP75.readFarenheit();
 		if (isnan(m_dblTemperatureSensorValue))
 		{
-			if (st::PollingSensor::debug) {
+			if (st::PollingSensor::debug)
+			{
 				Serial.println(F("PS_TMP75Temperature:: Error Reading Temperature Sensor"));
 			}
 			m_dblTemperatureSensorValue = -99.0;
 		}
-		
 		Everything::sendSmartString(getName() + " " + String(int(m_dblTemperatureSensorValue)));
-
 	}
-	
 }
